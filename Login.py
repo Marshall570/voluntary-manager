@@ -1,11 +1,53 @@
 # -*- coding: utf-8 -*-
+import tkinter
+from tkinter import messagebox
 from PyQt5 import QtCore, QtGui, QtWidgets
+from LoginController import LoginController
+
+controller = LoginController()
 
 
 class Ui_MainWindow(object):
+    def btn_create_clicked(self):
+        from Register import Ui_MainWindow
+        
+        QtWidgets.QApplication.activeWindow().close()
+
+        self.Register = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self.Register)
+        self.Register.show()
+
+    def btn_login_clicked(self):
+        this_window = QtWidgets.QApplication.activeWindow()
+
+        user = self.txt_user.text().strip().upper()
+        password = self.txt_password.text().strip()
+        response = controller.login(user, password)
+
+        if response == 'USER NOT FOUND':
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', 'O usuário informado não existe.')
+            tkinter.Tk().destroy()
+        elif response == 'WRONG PASSWORD':
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', 'Senha incorreta para o usuário informado')
+            tkinter.Tk().destroy()
+        else:
+            from App import Ui_MainWindow
+        
+            this_window.close()
+
+            self.App = QtWidgets.QMainWindow()
+            self.ui = Ui_MainWindow()
+            self.ui.setupUi(self.App)
+            self.App.show()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(431, 447)
+        MainWindow.resize(430, 450)
         MainWindow.setWindowTitle("GERENCIADOR DE VOLUNTÁRIOS")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -116,6 +158,11 @@ class Ui_MainWindow(object):
         self.btn_login.setObjectName("btn_login")
         self.gridLayout.addWidget(self.btn_login, 6, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+
+        self.btn_create.clicked.connect(self.btn_create_clicked)
+        self.btn_login.clicked.connect(self.btn_login_clicked)
+
+        controller.create()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

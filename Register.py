@@ -1,8 +1,62 @@
 # -*- coding: utf-8 -*-
+import tkinter
+from tkinter import messagebox
 from PyQt5 import QtCore, QtGui, QtWidgets
+from RegisterController import RegisterController
+
+controller = RegisterController()
 
 
 class Ui_MainWindow(object):
+    def btn_create_clicked(self):
+        this_window = QtWidgets.QApplication.activeWindow()
+        
+        user = self.txt_user.text().strip().upper()
+        password = self.txt_password.text().strip()
+        confirm = self.txt_confirm.text().strip()
+        level = self.cmb_level.currentText()
+
+        if len(password) < 8:
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', 'A senha digitada é muito pequena.\nDigite uma senha com ao menos 8 caracteres.')
+            tkinter.Tk().destroy()
+        
+        else:
+            if password != confirm:
+                root = tkinter.Tk()
+                root.withdraw()
+                messagebox.showerror('ERRO', 'As senhas não coincidem.')
+                tkinter.Tk().destroy()
+            
+            else:
+                verification = controller.select(user)
+                
+                if verification:
+                    root = tkinter.Tk()
+                    root.withdraw()
+                    messagebox.showerror('ERRO', 'Já existe um usuário com este nome.\nPor favor, escolha outro nome.')
+                    tkinter.Tk().destroy()
+
+                else:
+                    controller.insert(user, password, level)
+
+                    root = tkinter.Tk()
+                    root.withdraw()
+                    choice = messagebox.askquestion('RETORNAR PARA TELA DE LOGIN', 'Deseja retornar para a tela de login?')
+                    tkinter.Tk().destroy()
+
+                    if choice == 'yes':
+                        from Login import Ui_MainWindow
+                        this_window.close()
+
+                        self.Login = QtWidgets.QMainWindow()
+                        self.ui = Ui_MainWindow()
+                        self.ui.setupUi(self.Login)
+                        self.Login.show()
+
+
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(541, 484)
@@ -63,6 +117,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.txt_password.setFont(font)
         self.txt_password.setText("")
+        self.txt_password.setPlaceholderText("Ao menos 8 caracteres")
         self.txt_password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.txt_password.setObjectName("txt_password")
         self.gridLayout.addWidget(self.txt_password, 3, 0, 1, 1)
@@ -92,6 +147,7 @@ class Ui_MainWindow(object):
         self.txt_confirm.setFont(font)
         self.txt_confirm.setText("")
         self.txt_confirm.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.txt_confirm.setPlaceholderText("Repita a senha para verificação de erros")
         self.txt_confirm.setObjectName("txt_confirm")
         self.gridLayout.addWidget(self.txt_confirm, 5, 0, 1, 1)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
@@ -131,6 +187,9 @@ class Ui_MainWindow(object):
         self.btn_create.setObjectName("btn_create")
         self.gridLayout.addWidget(self.btn_create, 8, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+
+        self.btn_create.clicked.connect(self.btn_create_clicked)
+        controller.create()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
