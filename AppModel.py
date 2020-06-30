@@ -1,320 +1,319 @@
 # -*- coding: utf-8 -*-
 
 class AppModel:
-    def __init__(self, code=None, unique_id=None, registered=None, name=None, father_name=None, mother_name=None, address=None, number=None, complement=None, neighbourhood=None, city=None, state=None, postal_code=None, home_phone=None, mobile_phone=None, course=None, cpf=None, rg=None, emitter=None, home_town=None, home_state=None, birth_date=None, civil_state=None, gender=None, scholarship=None, email=None, company=None, company_time=None, ocupation=None, company_address=None, company_neighbourhood=None, company_number=None, company_city=None, company_state=None, company_postal_code=None, company_phone=None):
-        self.code = code
-        self.unique_id = unique_id
-        self.registered = registered
-        self.name = name
-        self.father_name = father_name
-        self.mother_name = mother_name
-        self.address = address
-        self.number = number
-        self.complement = complement
-        self.neighbourhood = neighbourhood
-        self.city = city
-        self.state = state
-        self.postal_code = postal_code
-        self.home_phone = home_phone
-        self.mobile_phone = mobile_phone
-        self.cpf = cpf
-        self.rg = rg
-        self.emitter = emitter
-        self.home_town = home_town
-        self.home_state = home_state
-        self.birth_date = birth_date
-        self.civil_state = civil_state
-        self.gender = gender
-        self.scholarship = scholarship
-        self.email = email
-        self.course = course
-        self.company = company
-        self.company_time = company_time
-        self.ocupation = ocupation
-        self.company_address = company_address
-        self.company_neighbourhood = company_neighbourhood
-        self.company_number = company_number
-        self.company_city = company_city
-        self.company_state = company_state
-        self.company_postal_code = company_postal_code
-        self.company_phone = company_phone
-
-    @property
-    def code(self):
-        return self.code
-
-    @code.setter
-    def code(self, code):
-        self.code = code
+    def __init__(self, unique_id=None, registered=None, name=None, father=None, mother=None, address=None, number=None, complement=None, neighbourhood=None, city=None, state=None, postal_code=None, home_phone=None, mobile_phone=None, course=None, cpf=None, rg=None, emitter=None, home_town=None, home_state=None, birth_date=None, civil_state=None, gender=None, scholarship=None, email=None, company_name=None, company_time=None, ocupation=None, company_address=None, company_neighbourhood=None, company_number=None, company_city=None, company_state=None, company_postal_code=None, company_phone=None):
+        self._unique_id = unique_id
+        self._registered = registered
+        self._name = name
+        self._father = father
+        self._mother = mother
+        self._address = address
+        self._number = number
+        self._complement = complement
+        self._neighbourhood = neighbourhood
+        self._city = city
+        self._state = state
+        self._postal_code = postal_code
+        self._home_phone = home_phone
+        self._mobile_phone = mobile_phone
+        self._cpf = cpf
+        self._rg = rg
+        self._emitter = emitter
+        self._home_town = home_town
+        self._home_state = home_state
+        self._birth_date = birth_date
+        self._civil_state = civil_state
+        self._gender = gender
+        self._scholarship = scholarship
+        self._email = email
+        self._course = course
+        self._company_name = company_name
+        self._company_time = company_time
+        self._ocupation = ocupation
+        self._company_address = company_address
+        self._company_neighbourhood = company_neighbourhood
+        self._company_number = company_number
+        self._company_city = company_city
+        self._company_state = company_state
+        self._company_postal_code = company_postal_code
+        self._company_phone = company_phone
 
     @property
     def unique_id(self):
-        return self.unique_id
+        return self._unique_id
 
     @unique_id.setter
-    def unique_id(self, unique_id):
-        self.unique_id = unique_id
+    def unique_id(self, UniqueId):
+        self._unique_id = UniqueId
 
     @property
     def registered(self):
-        return self.registered
+        return self._registered
 
     @registered.setter
-    def registered(self, registered):
-        self.registered = registered
+    def registered(self, Registered):
+        self._registered = Registered
 
     @property
     def name(self):
-        return self.name
+        return self._name
 
     @name.setter
-    def name(self, name):
-        self.name = name
+    def name(self, Name):
+        self._name = Name
 
     @property
-    def father_name(self):
-        return self.father_name
+    def father(self):
+        return self._father
 
-    @father_name.setter
-    def father_name(self, father_name):
-        self.father_name = father_name
+    @father.setter
+    def father(self, FatherName):
+        self._father = FatherName
 
     @property
-    def mother_name(self):
-        return self.mother_name
+    def mother(self):
+        return self._mother
 
-    @mother_name.setter
-    def mother_name(self, mother_name):
-        self.mother_name = mother_name
+    @mother.setter
+    def mother(self, MotherName):
+        self._mother = MotherName
 
     @property
     def address(self):
-        return self.address
+        return self._address
 
     @address.setter
-    def address(self, address):
-        self.address = address
+    def address(self, Address):
+        self._address = Address
 
     @property
     def number(self):
-        return self.number
+        return self._number
 
     @number.setter
-    def number(self, number):
-        self.number = number
+    def number(self, Number):
+        self._number = Number
 
     @property
     def complement(self):
-        return self.complement
+        return self._complement
 
     @complement.setter
-    def complement(self, complement):
-        self.complement = complement
+    def complement(self, Complement):
+        self._complement = Complement
 
     @property
     def neighbourhood(self):
-        return self.neighbourhood
+        return self._neighbourhood
 
     @neighbourhood.setter
-    def neighbourhood(self, neighbourhood):
-        self.neighbourhood = neighbourhood
+    def neighbourhood(self, Neighbourhood):
+        self._neighbourhood = Neighbourhood
 
     @property
     def city(self):
-        return self.city
+        return self._city
 
     @city.setter
-    def city(self, city):
-        self.city = city
+    def city(self, City):
+        self._city = City
 
     @property
     def state(self):
-        return self.state
+        return self._state
 
     @state.setter
-    def state(self, state):
-        self.state = state
+    def state(self, State):
+        self._state = State
 
     @property
     def postal_code(self):
-        return self.postal_code
+        return self._postal_code
 
     @postal_code.setter
-    def postal_code(self, postal_code):
-        self.postal_code = postal_code
+    def postal_code(self, PostalCode):
+        self._postal_code = PostalCode
 
     @property
     def home_phone(self):
-        return self.home_phone
+        return self._home_phone
 
     @home_phone.setter
-    def home_phone(self, home_phone):
-        self.home_phone = home_phone
+    def home_phone(self, HomePhone):
+        self._home_phone = HomePhone
 
     @property
     def mobile_phone(self):
-        return self.mobile_phone
+        return self._mobile_phone
 
     @mobile_phone.setter
-    def mobile_phone(self, mobile_phone):
-        self.mobile_phone = mobile_phone
+    def mobile_phone(self, MobilePhone):
+        self._mobile_phone = MobilePhone
 
     @property
     def cpf(self):
-        return self.cpf
+        return self._cpf
 
     @cpf.setter
-    def cpf(self, cpf):
-        self.cpf = cpf
+    def cpf(self, Cpf):
+        self._cpf = Cpf
 
     @property
     def rg(self):
-        return self.rg
+        return self._rg
 
     @rg.setter
-    def rg(self, rg):
-        self.rg = rg
+    def rg(self, Rg):
+        self._rg = Rg
 
     @property
     def emitter(self):
-        return self.emitter
+        return self._emitter
 
     @emitter.setter
-    def emitter(self, emitter):
-        self.emitter = emitter
+    def emitter(self, Emitter):
+        self._emitter = Emitter
 
     @property
     def home_town(self):
-        return self.home_town
+        return self._home_town
 
     @home_town.setter
-    def home_town(self, home_town):
-        self.home_town = home_town
+    def home_town(self, HomeTown):
+        self._home_town = HomeTown
 
     @property
     def home_state(self):
-        return self.home_state
+        return self._home_state
 
     @home_state.setter
-    def home_state(self, home_state):
-        self.home_state = home_state
+    def home_state(self, HomeState):
+        self._home_state = HomeState
+    
+    @property
+    def birth_date(self):
+        return self._birth_date
+
+    @birth_date.setter
+    def birth_date(self, BirthDate):
+        self._birth_date = BirthDate
 
     @property
     def civil_state(self):
-        return self.civil_state
+        return self._civil_state
 
     @civil_state.setter
-    def civil_state(self, civil_state):
-        self.civil_state = civil_state
+    def civil_state(self, CivilState):
+        self._civil_state = CivilState
 
     @property
     def gender(self):
-        return self.gender
+        return self._gender
 
     @gender.setter
-    def gender(self, gender):
-        self.gender = gender
+    def gender(self, Gender):
+        self._gender = Gender
 
     @property
     def scholarship(self):
-        return self.scholarship
+        return self._scholarship
 
     @scholarship.setter
-    def scholarship(self, scholarship):
-        self.scholarship = scholarship
+    def scholarship(self, Scholarship):
+        self._scholarship = Scholarship
 
     @property
     def email(self):
-        return self.email
+        return self._email
 
     @email.setter
-    def email(self, email):
-        self.email = email
+    def email(self, Email):
+        self._email = Email
 
     @property
     def course(self):
-        return self.course
+        return self._course
 
     @course.setter
-    def course(self, course):
-        self.course = course
+    def course(self, Course):
+        self._course = Course
 
     @property
-    def company(self):
-        return self.company
+    def company_name(self):
+        return self._company_name
 
-    @company.setter
-    def company(self, company):
-        self.company = company
+    @company_name.setter
+    def company_name(self, Company):
+        self._company_name = Company
 
     @property
     def company_time(self):
-        return self.company_time
+        return self._company_time
 
     @company_time.setter
-    def company_time(self, company_time):
-        self.company_time = company_time
+    def company_time(self, CompanyTime):
+        self._company_time = CompanyTime
 
     @property
     def ocupation(self):
-        return self.ocupation
+        return self._ocupation
 
     @ocupation.setter
-    def ocupation(self, ocupation):
-        self.ocupation = ocupation
+    def ocupation(self, Ocupation):
+        self._ocupation = Ocupation
 
     @property
     def company_address(self):
-        return self.company_address
+        return self._company_address
 
     @company_address.setter
-    def company_address(self, company_address):
-        self.company_address = company_address
+    def company_address(self, CompanyAddress):
+        self._company_address = CompanyAddress
 
     @property
     def company_neighbourhood(self):
-        return self.company_neighbourhood
+        return self._company_neighbourhood
 
     @company_neighbourhood.setter
-    def company_neighbourhood(self, company_neighbourhood):
-        self.company_neighbourhood = company_neighbourhood
+    def company_neighbourhood(self, CompanyNeighbourhood):
+        self._company_neighbourhood = CompanyNeighbourhood
 
     @property
     def company_number(self):
-        return self.company_number
+        return self._company_number
 
     @company_number.setter
-    def company_number(self, company_number):
-        self.company_number = company_number
+    def company_number(self, CompanyNumber):
+        self._company_number = CompanyNumber
 
     @property
     def company_city(self):
-        return self.company_city
+        return self._company_city
 
     @company_city.setter
-    def company_city(self, company_city):
-        self.company_city = company_city
+    def company_city(self, CompanyCity):
+        self._company_city = CompanyCity
 
     @property
     def company_state(self):
-        return self.company_state
+        return self._company_state
 
     @company_state.setter
-    def company_state(self, company_state):
-        self.company_state = company_state
+    def company_state(self, CompanyState):
+        self._company_state = CompanyState
 
     @property
     def company_postal_code(self):
-        return self.company_postal_code
+        return self._company_postal_code
 
     @company_postal_code.setter
-    def company_postal_code(self, company_postal_code):
-        self.company_postal_code = company_postal_code
+    def company_postal_code(self, CompanyPostalCode):
+        self._company_postal_code = CompanyPostalCode
 
     @property
     def company_phone(self):
-        return self.company_phone
+        return self._company_phone
 
     @company_phone.setter
-    def company_phone(self, company_phone):
-        self.company_phone = company_phone
+    def company_phone(self, CompanyPhone):
+        self._company_phone = CompanyPhone

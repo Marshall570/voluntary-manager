@@ -3,3 +3,4 @@
 UIs/
 __pycache__/
 *.db
+assets/pictures/*

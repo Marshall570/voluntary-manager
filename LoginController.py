@@ -13,7 +13,8 @@ class LoginController:
                 id INTEGER NOT NULL PRIMARY KEY,
                 user TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                level TEXT NOT NULL
+                level TEXT NOT NULL,
+                status TEXT
             )'''
 
             conn = db.create_connection()
@@ -29,16 +30,35 @@ class LoginController:
         try:
             conn = db.create_connection()
             cursor = conn.cursor()
-            user_date = cursor.execute('SELECT user, password FROM users WHERE user = \'' + username + '\'').fetchone()
+            user_data = cursor.execute('SELECT user, password FROM users WHERE user = \'' + username + '\'').fetchone()
 
-            if user_date is None:
+            if user_data is None:
                 return 'USER NOT FOUND'
                 
             
-            if password != user_date[1]:
+            if password != user_data[1]:
                 return 'WRONG PASSWORD'
             else:
+                cursor.execute('UPDATE users SET status = \'ON\' WHERE status = \'OFF\' AND user = \'' + username + '\'')
+                conn.commit()
                 return 'OK'
                 
         except Exception as e:
             print(e)
+
+        finally:
+            db.close_connection()
+
+    def reset_status(self):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            cursor.execute('UPDATE users SET status = \'OFF\' WHERE status = \'ON\'')
+            conn.commit()
+            
+                
+        except Exception as e:
+            print(e)
+
+        finally:
+            db.close_connection()

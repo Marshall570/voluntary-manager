@@ -1,8 +1,243 @@
 # -*- coding: utf-8 -*-
+import tkinter
+import random
+import string
+import os.path
+from shutil import copyfile
+from tkinter import messagebox
 from PyQt5 import QtCore, QtGui, QtWidgets
+from AppController import AppController
+from AppModel import AppModel
+
+controller = AppController()
+model = AppModel()
 
 
 class Ui_MainWindow(object):
+    status = None
+
+    def enable_navigation(self):
+        self.tab_voluntary.setEnabled(False)
+        self.tab_company.setEnabled(False)
+        self.btn_search.setEnabled(True)
+        self.txt_search.setReadOnly(False)
+        self.txt_index.setReadOnly(False)
+    
+    def disable_navigation(self):
+        self.tab_voluntary.setEnabled(True)
+        self.tab_company.setEnabled(True)
+        self.btn_search.setEnabled(False)
+        self.txt_search.setReadOnly(True)
+        self.txt_index.setReadOnly(True)
+
+    def empty_inputs(self):
+        self.lbl_register.setText('')
+        self.txt_name.setText('')
+        self.txt_father.setText('')
+        self.txt_mother.setText('')
+        self.txt_address.setText('')
+        self.txt_number.setText('')
+        self.txt_complement.setText('')
+        self.txt_neighbourhood.setText('')
+        self.txt_city.setText('')
+        self.txt_postal_code.setText('')
+        self.txt_home_phone.setText('')
+        self.txt_mobile_phone.setText('')
+        self.txt_cpf.setText('')
+        self.txt_rg.setText('')
+        self.txt_emitter.setText('')
+        self.txt_home_town.setText('')
+        self.txt_birth_date.setText('')
+        self.txt_scholarship.setText('')
+        self.txt_email.setText('')
+        self.txt_company_name.setText('')
+        self.txt_company_time.setText('')
+        self.txt_ocupation.setText('')
+        self.txt_company_address.setText('')
+        self.txt_company_neighbourhood.setText('')
+        self.txt_company_number.setText('')
+        self.txt_company_city.setText('')
+        self.txt_company_postal_code.setText('')
+        self.txt_company_phone.setText('')
+    
+    def fill_inputs(self):        
+        if self.txt_index.value() != 0:
+            response = controller.select(self.txt_index.value())
+
+            try:
+                if os.path.exists(f'assets/pictures/{response[1]}.jpg'):
+                    image = QtGui.QPixmap(f'assets/pictures/{response[1]}.jpg')
+                    self.pic_box.setPixmap(image)
+            except:
+                print('picture not found')
+
+            self.lbl_register.setText('Registrado em:\n\n\n' + response[2])
+            self.txt_name.setText(response[3])
+            self.txt_father.setText(response[4])
+            self.txt_mother.setText(response[5])
+            self.txt_address.setText(response[6])
+            self.txt_number.setText(response[7])
+            self.txt_complement.setText(response[8])
+            self.txt_neighbourhood.setText(response[9])
+            self.txt_city.setText(response[10])
+            self.cmb_state.setCurrentText(response[11])
+            self.txt_postal_code.setText(response[12])
+            self.txt_home_phone.setText(response[13])
+            self.txt_mobile_phone.setText(response[14])
+            self.txt_cpf.setText(response[15])
+            self.txt_rg.setText(response[16])
+            self.txt_emitter.setText(response[17])
+            self.txt_home_town.setText(response[18])
+            self.cmb_home_state.setCurrentText(response[19])
+            self.txt_birth_date.setText(response[20])
+            self.cmb_civil_state.setCurrentText(response[21])
+            self.cmb_gender.setCurrentText(response[22])
+            self.txt_scholarship.setText(response[23])
+            self.txt_email.setText(response[24])
+            self.cmb_course.setCurrentText(response[25])
+            self.txt_company_name.setText(response[26])
+            self.txt_company_time.setText(response[27])
+            self.txt_ocupation.setText(response[28])
+            self.txt_company_address.setText(response[29])
+            self.txt_company_neighbourhood.setText(response[30])
+            self.txt_company_number.setText(response[31])
+            self.txt_company_city.setText(response[32])
+            self.cmb_company_state.setCurrentText(response[33])
+            self.txt_company_postal_code.setText(response[34])
+            self.txt_company_phone.setText(response[35])
+
+    def btn_add_clicked(self):
+        self.disable_navigation()
+        self.empty_inputs()
+        self.btn_add.setEnabled(False)
+        self.btn_edit.setEnabled(False)
+        self.btn_delete.setEnabled(False)
+        self.btn_print.setEnabled(False)
+        self.btn_cancel.setEnabled(True)
+        self.btn_save.setEnabled(True)
+    
+        self.txt_name.setFocus()
+        self.status = 'adding'
+
+    def btn_edit_clicked(self):
+        self.disable_navigation()
+        self.btn_add.setEnabled(False)
+        self.btn_edit.setEnabled(False)
+        self.btn_delete.setEnabled(False)
+        self.btn_print.setEnabled(False)
+        self.btn_cancel.setEnabled(True)
+        self.btn_save.setEnabled(True)
+
+        self.txt_name.setFocus()
+        self.status = 'editing'
+
+    def btn_cancel_clicked(self):
+        self.enable_navigation()
+        
+        try:
+            self.fill_inputs()
+
+        except:
+            self.empty_inputs()
+
+        self.btn_add.setEnabled(True)
+        self.btn_edit.setEnabled(True)
+        self.btn_delete.setEnabled(True)
+        self.btn_print.setEnabled(True)
+        self.btn_cancel.setEnabled(False)
+        self.btn_save.setEnabled(False)
+
+        self.status = None
+
+    
+    def btn_save_clicked(self):
+        import datetime
+        date = datetime.datetime.now()
+        
+        model.unique_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        model.name = self.txt_name.text().strip().upper()
+        model.father = self.txt_father.text()
+        model.mother = self.txt_mother.text()
+        model.address = self.txt_address.text()
+        model.number = self.txt_number.text()
+        model.complement = self.txt_complement.text()
+        model.neighbourhood = self.txt_neighbourhood.text()
+        model.city = self.txt_city.text()
+        model.state = self.cmb_state.currentText()
+        model.postal_code = self.txt_postal_code.text()
+        model.home_phone = self.txt_home_phone.text()
+        model.mobile_phone = self.txt_mobile_phone.text()
+        model.cpf = self.txt_cpf.text()
+        model.rg = self.txt_rg.text()
+        model.emitter = self.txt_emitter.text()
+        model.home_town = self.txt_home_town.text()
+        model.home_state = self.cmb_home_state.currentText()
+        model.birth_date = self.txt_birth_date.text()
+        model.civil_state = self.cmb_civil_state.currentText()
+        model.gender = self.cmb_gender.currentText()
+        model.scholarship = self.txt_scholarship.text()
+        model.email = self.txt_email.text()
+        model.course = self.cmb_course.currentText()
+        model.company_name = self.txt_company_name.text()
+        model.company_time = self.txt_company_time.text()
+        model.ocupation = self.txt_ocupation.text()
+        model.company_address = self.txt_company_address.text()
+        model.company_neighbourhood = self.txt_company_neighbourhood.text()
+        model.company_number = self.txt_company_number.text()
+        model.company_city = self.txt_company_city.text()
+        model.company_state = self.cmb_company_state.currentText()
+        model.company_postal_code = self.txt_company_postal_code.text()
+        model.company_phone = self.txt_company_phone.text()
+        
+        if len(model.name) < 5 or len(model.address) < 5 or len(model.number) < 1 or len(model.neighbourhood) < 3 or len(model.city) < 3 or len(model.mobile_phone) < 15 or len(model.cpf) < 14 or len(model.rg) < 12 or len(model.birth_date) < 10:
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', 'Alguns campos não foram preenchidos corretamente.\nPreencha-os e tente novamente.')
+            tkinter.Tk().destroy()
+
+        else:
+            root = tkinter.Tk()
+            root.withdraw()
+            choice = messagebox.askquestion('ATENÇÃO', 'Deseja salvar as alterações?')
+            tkinter.Tk().destroy()
+
+            if choice == 'yes':
+                if self.status == 'adding':
+                    new_total = controller.insert(model, date.strftime('%x'))
+                    self.txt_index.setMaximum(new_total)
+                    
+                
+                elif self.status == 'editing':
+                    controller.update()
+                
+                root = tkinter.Tk()
+                root.withdraw()
+                choice = messagebox.askquestion('ADICIONAR FOTO', 'Deseja adicionar uma foto desse voluntário?')
+                tkinter.Tk().destroy()
+                
+                if choice == 'yes':
+                    import platform
+                    import os
+                    path = ''
+                                            
+                    if platform.system() == 'Linux':
+                        path = os.path.expanduser("~") + '/Imagens'
+                    else:
+                        path = os.path.expanduser("~") + '\\Images'
+                        
+                    dialog = QtWidgets.QFileDialog()        
+                    file = dialog.getOpenFileName(dialog, 'Selecionar imagem', path, 'Arquivos de imagem (*.jpeg *.jpg *.png)')    
+                                            
+                    if file[0] != '':
+                        copyfile(file[0], f'./assets/pictures/{model.unique_id}.jpg')
+            
+                        root = tkinter.Tk()
+                        root.withdraw()
+                        messagebox.showinfo('ADICIONAR FOTO', f'Imagem adicionada com sucesso para o voluntário <{model.name}>!')
+                        tkinter.Tk().destroy()
+
+                self.btn_cancel_clicked()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1020, 582)
@@ -16,10 +251,11 @@ class Ui_MainWindow(object):
         self.btn_save.setToolTip("<html><head/><body><p>Salvar alterações</p></body></html>")
         self.btn_save.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("UIs/../assets/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("assets/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_save.setIcon(icon)
         self.btn_save.setIconSize(QtCore.QSize(32, 32))
         self.btn_save.setFlat(True)
+        self.btn_save.setEnabled(False)
         self.btn_save.setObjectName("btn_save")
         self.gridLayout.addWidget(self.btn_save, 3, 4, 1, 1)
         self.lbl_register = QtWidgets.QLabel(self.centralwidget)
@@ -38,10 +274,11 @@ class Ui_MainWindow(object):
         self.btn_cancel.setToolTip("<html><head/><body><p>Cancelar operação</p></body></html>")
         self.btn_cancel.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("UIs/../assets/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("assets/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_cancel.setIcon(icon1)
         self.btn_cancel.setIconSize(QtCore.QSize(32, 32))
         self.btn_cancel.setFlat(True)
+        self.btn_cancel.setEnabled(False)
         self.btn_cancel.setObjectName("btn_cancel")
         self.gridLayout.addWidget(self.btn_cancel, 3, 3, 1, 1)
         self.btn_edit = QtWidgets.QPushButton(self.centralwidget)
@@ -49,7 +286,7 @@ class Ui_MainWindow(object):
         self.btn_edit.setToolTip("<html><head/><body><p>Editar o registro atual</p></body></html>")
         self.btn_edit.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("UIs/../assets/edit.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("assets/edit.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_edit.setIcon(icon2)
         self.btn_edit.setIconSize(QtCore.QSize(32, 32))
         self.btn_edit.setFlat(True)
@@ -771,7 +1008,7 @@ class Ui_MainWindow(object):
         self.btn_print.setToolTip("<html><head/><body><p>Imprimir a ficha do registro atual</p></body></html>")
         self.btn_print.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("UIs/../assets/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("assets/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_print.setIcon(icon3)
         self.btn_print.setIconSize(QtCore.QSize(32, 32))
         self.btn_print.setFlat(True)
@@ -788,7 +1025,7 @@ class Ui_MainWindow(object):
         self.btn_delete.setToolTip("<html><head/><body><p>Excluir registro atual</p></body></html>")
         self.btn_delete.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("UIs/../assets/trash-2.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("assets/trash-2.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_delete.setIcon(icon4)
         self.btn_delete.setIconSize(QtCore.QSize(32, 32))
         self.btn_delete.setFlat(True)
@@ -799,12 +1036,49 @@ class Ui_MainWindow(object):
         self.btn_add.setToolTip("<html><head/><body><p>Adicionar um registro</p></body></html>")
         self.btn_add.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("UIs/../assets/plus-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap("assets/plus-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_add.setIcon(icon5)
         self.btn_add.setIconSize(QtCore.QSize(32, 32))
         self.btn_add.setFlat(True)
         self.btn_add.setObjectName("btn_add")
         self.gridLayout.addWidget(self.btn_add, 3, 2, 1, 1)
+
+        controller.create()
+
+        level = controller.get_access_level()
+
+        if level == 'COMUM' or level == None:
+            self.btn_add.setVisible(False)
+            self.btn_edit.setVisible(False)
+            self.btn_save.setVisible(False)
+            self.btn_cancel.setVisible(False)
+            self.btn_delete.setVisible(False)
+        
+        elif level == 'GERENTE':
+            self.btn_delete.setVisible(False)
+        
+        self.btn_add.clicked.connect(self.btn_add_clicked)
+        self.btn_edit.clicked.connect(self.btn_edit_clicked)
+        self.btn_cancel.clicked.connect(self.btn_cancel_clicked)
+        self.btn_save.clicked.connect(self.btn_save_clicked)
+        self.txt_index.valueChanged.connect(self.fill_inputs)
+
+        if controller.get_total() < 1:
+            self.txt_index.setMinimum(0)
+            self.txt_index.setMaximum(0)
+            self.disable_navigation()
+            self.tab_voluntary.setEnabled(False)
+            self.tab_company.setEnabled(False)
+            self.btn_delete.setEnabled(False)
+            self.btn_print.setEnabled(False)
+            self.btn_edit.setEnabled(False)
+
+        else:
+            self.txt_index.setValue(1)
+            self.txt_index.setMinimum(1)
+            self.txt_index.setMaximum(controller.get_total())
+            self.enable_navigation()
+        
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.tabWidget.setCurrentIndex(0)

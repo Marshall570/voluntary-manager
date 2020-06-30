@@ -163,6 +163,7 @@ class Ui_MainWindow(object):
         self.btn_login.clicked.connect(self.btn_login_clicked)
 
         controller.create()
+        controller.reset_status()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

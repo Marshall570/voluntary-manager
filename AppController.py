@@ -5,6 +5,7 @@ from Connection import Connection
 
 db = Connection()
 
+
 class AppController:
     def create(self):
         try:
@@ -44,7 +45,7 @@ class AppController:
                 cidade_empresa TEXT,
                 estado_empresa TEXT,
                 cep_empresa TEXT,
-                telefone_empresa TEXT,
+                telefone_empresa TEXT
             )'''
 
             conn = db.create_connection()
@@ -52,6 +53,107 @@ class AppController:
             cursor.execute(create_table_string)
         except Exception as e:
             print(e)
-        
+
+        finally:
+            db.close_connection()
+
+    def select(self, index):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            data = cursor.execute(f'SELECT * FROM voluntaries WHERE id = {index}').fetchone()
+            
+            return data
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            db.close_connection()
+
+    def get_access_level(self):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            level = cursor.execute('SELECT level FROM users WHERE status = \'ON\'').fetchone()[0]
+
+            return level
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            db.close_connection()
+
+    def insert(self, model, date):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            voluntary_id = cursor.execute('SELECT COUNT(*) FROM voluntaries').fetchone()[0] + 1
+
+            insert_string = f'''INSERT INTO voluntaries VALUES(
+            {voluntary_id},
+            '{model.unique_id}',
+            '{date}',
+            '{model.name}',
+            '{model.father}',
+            '{model.mother}',
+            '{model.address}',
+            '{model.number}',
+            '{model.complement}',
+            '{model.neighbourhood}',
+            '{model.city}',
+            '{model.state}',
+            '{model.postal_code}',
+            '{model.home_phone}',
+            '{model.mobile_phone}',
+            '{model.cpf}',
+            '{model.rg}',
+            '{model.emitter}',
+            '{model.home_town}',
+            '{model.home_state}',
+            '{model.birth_date}',
+            '{model.civil_state}',
+            '{model.gender}',
+            '{model.scholarship}',
+            '{model.email}',
+            '{model.course}',
+            '{model.company_name}',
+            '{model.ocupation}',
+            '{model.company_time}',
+            '{model.company_address}',
+            '{model.company_neighbourhood}',
+            '{model.company_number}',
+            '{model.company_city}',
+            '{model.company_state}',
+            '{model.company_postal_code}',
+            '{model.company_phone}')'''
+
+            cursor.execute(insert_string)
+            conn.commit()
+
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showinfo('SUCESSO', 'Registro de voluntário criado com sucesso!')
+            tkinter.Tk().destroy()
+
+            return voluntary_id
+        except Exception as e:
+            print(e)
+
+        finally:
+            db.close_connection()
+
+    def get_total(self):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            total = cursor.execute('SELECT COUNT(*) FROM voluntaries').fetchone()[0]
+
+            return total
+
+        except Exception as e:
+            print(e)
+
         finally:
             db.close_connection()

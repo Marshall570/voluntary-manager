@@ -13,7 +13,8 @@ class RegisterController:
                 id INTEGER NOT NULL PRIMARY KEY,
                 user TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                level TEXT NOT NULL
+                level TEXT NOT NULL,
+                status TEXT
             )'''
 
             conn = db.create_connection()
@@ -31,7 +32,7 @@ class RegisterController:
             cursor = conn.cursor()
             user_id = cursor.execute('SELECT COUNT(*) FROM users').fetchone()[0] + 1
 
-            query_string = f'''INSERT INTO users VALUES ({user_id}, '{user}', '{password}', '{level}')'''
+            query_string = f'''INSERT INTO users VALUES ({user_id}, '{user}', '{password}', '{level}', 'OFF')'''
 
             cursor.execute(query_string)
             conn.commit()
