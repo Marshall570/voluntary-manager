@@ -274,6 +274,10 @@ class Ui_MainWindow(object):
     def btn_search_clicked(self):
         controller.id_search(self.txt_search.text().strip().upper())
 
+    def btn_print_clicked(self):
+        controller.gen_contract(self.txt_index.value())
+        
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName('MainWindow')
         MainWindow.resize(1020, 582)
@@ -1098,6 +1102,7 @@ class Ui_MainWindow(object):
         self.btn_cancel.clicked.connect(self.btn_cancel_clicked)
         self.btn_save.clicked.connect(self.btn_save_clicked)
         self.btn_delete.clicked.connect(self.btn_delete_clicked)
+        self.btn_print.clicked.connect(self.btn_print_clicked)
         self.btn_search.clicked.connect(self.btn_search_clicked)
         self.txt_index.valueChanged.connect(self.fill_inputs)
 

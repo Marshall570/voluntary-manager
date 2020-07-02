@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import tkinter
+import fpdf
+import os
+import platform
 from tkinter import messagebox
 from Connection import Connection
 
@@ -256,11 +259,102 @@ class AppController:
                     for column in row:
                         message += str(column)
                         message += ' - '                
+                
+                    message = message[:-3]
+                    message += '\n\n'
 
                 root = tkinter.Tk()
                 root.withdraw()
-                messagebox.showinfo('ATENÇÃO', message[:-3])
+                messagebox.showinfo('ATENÇÃO', message)
                 tkinter.Tk().destroy()                
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            db.close_connection()
+
+    def gen_contract(self, index):
+        try:
+            database_fields = [
+                'ID',
+                'SERIAL',
+                'REGISTRADO EM',
+                'NOME',
+                'NOME DO PAI',
+                'NOME DA MAE',
+                'ENDERECO',
+                'NUMERO',
+                'COMPLEMENTO',
+                'BAIRRO',
+                'CIDADE',
+                'ESTADO',
+                'CEP',
+                'TELEFONE (RESIDENCIAL)',
+                'TELEFONE (CELULAR)',
+                'CPF',
+                'RG',
+                'ORGAO EMISSOR',
+                'CIDADE NATAL',
+                'ESTADO NATAL',
+                'DATA DE NASCIMENTO',
+                'ESTADO CIVIL',
+                'GENERO',
+                'ESCOLARIDADE',
+                'EMAIL',
+                'CURSO DOUTRINARIO',
+                'EMPRESA',
+                'OCUPACAO',
+                'TEMPO DE EMPRESA',
+                'ENDERECO DA EMPRESA',
+                'BAIRRO DA EMPRESA',
+                'NUMERO DA EMPRESA',
+                'CIDADE DA EMPRESA',
+                'ESTADO DA EMPRESA',
+                'CEP DA EMPRESA',
+                'TELEFONE DA EMPRESA'
+            ]
+
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            result = cursor.execute(f'SELECT * FROM voluntaries WHERE id = {index}').fetchone()
+
+            pdf = fpdf.FPDF(format='A4')
+            pdf.add_page()
+            pdf.set_font('times', 'B', size=20)
+            pdf.set_fill_color(200,200,200)
+            pdf.write(15,'DADOS DO VOLUNTÁRIO')
+            pdf.ln()
+
+            i = 1
+            while i < len(database_fields):
+                if result[i] != '' and not result[i].endswith('-') and database_fields[i] != 'ESTADO DA EMPRESA':
+                    pdf.set_font('helvetica', 'B',size = 12)
+                    pdf.cell(55, 12, database_fields[i], 1, 0, '', 1, '')
+                    pdf.set_font('helvetica', size = 12)
+                    pdf.multi_cell(0, 12, result[i], 1, 'J', 0)
+                
+                i += 1
+
+            pdf.add_page()
+            pdf.write(15,'CONTRATO DE VOLUNTÁRIO')
+
+            if platform.system() == 'Linux':
+                if not os.path.exists(os.path.expanduser("~") + '/Documentos/CONTRATOS_DE_VOLUNTARIOS'):
+                    os.mkdir(os.path.expanduser("~") + '/Documentos/CONTRATOS_DE_VOLUNTARIOS')
+                
+                pdf.output(os.path.expanduser("~") + '/Documentos/CONTRATOS_DE_VOLUNTARIOS/Contrato_de_' + result[3] + '.pdf')
+
+            else:
+                if not os.path.exists(os.path.expanduser("~") + '\\Documents\\CONTRATOS_DE_VOLUNTARIOS'):
+                    os.mkdir(os.path.expanduser("~") + '\\Documents\\CONTRATOS_DE_VOLUNTARIOS')
+                
+                pdf.output(os.path.expanduser("~") + '\\Documentos\\CONTRATOS_DE_VOLUNTARIOS\\Contrato_de_' + result[3] + '.pdf')
+
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showinfo('SUCESSO', 'Contrato de voluntariado gerado com sucesso!')
+            tkinter.Tk().destroy()
 
         except Exception as e:
             print(e)
