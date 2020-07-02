@@ -55,7 +55,10 @@ class AppController:
             cursor = conn.cursor()
             cursor.execute(create_table_string)
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -69,7 +72,10 @@ class AppController:
             return data
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -83,7 +89,10 @@ class AppController:
             return level
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -142,7 +151,10 @@ class AppController:
 
             return voluntary_id
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -198,7 +210,10 @@ class AppController:
             tkinter.Tk().destroy()
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -212,7 +227,10 @@ class AppController:
             return total
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -233,7 +251,10 @@ class AppController:
            tkinter.Tk().destroy()
         
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -269,7 +290,10 @@ class AppController:
                 tkinter.Tk().destroy()                
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -357,7 +381,10 @@ class AppController:
             tkinter.Tk().destroy()
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()

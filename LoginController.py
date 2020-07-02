@@ -21,7 +21,10 @@ class LoginController:
             cursor = conn.cursor()
             cursor.execute(create_table_string)
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -44,7 +47,10 @@ class LoginController:
                 return 'OK'
                 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -58,7 +64,10 @@ class LoginController:
             
                 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()

@@ -21,7 +21,10 @@ class RegisterController:
             cursor = conn.cursor()
             cursor.execute(create_table_string)
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -42,7 +45,10 @@ class RegisterController:
             messagebox.showinfo('SUCESSO', 'Usuário criado com sucesso!')
             tkinter.Tk().destroy()
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
 
         finally:
             db.close_connection()
@@ -60,7 +66,10 @@ class RegisterController:
                 return False
 
         except Exception as e:
-            print(e)
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
         
         finally:
             db.close_connection()
