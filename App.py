@@ -152,7 +152,7 @@ class Ui_MainWindow(object):
     
     def btn_save_clicked(self):
         import datetime
-        date = datetime.datetime.now()
+        date = datetime.datetime.now().strftime('%d/%m/%Y')
         
         import random
         import string
@@ -206,7 +206,7 @@ class Ui_MainWindow(object):
 
             if choice == 'yes':
                 if self.status == 'adding':
-                    new_total = controller.insert(model, date.strftime('%x'))
+                    new_total = controller.insert(model, date)
                     self.txt_index.setMaximum(new_total)
                     
                 
