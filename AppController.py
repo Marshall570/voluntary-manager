@@ -373,7 +373,7 @@ class AppController:
                 if not os.path.exists(os.path.expanduser("~") + '\\Documents\\CONTRATOS_DE_VOLUNTARIOS'):
                     os.mkdir(os.path.expanduser("~") + '\\Documents\\CONTRATOS_DE_VOLUNTARIOS')
                 
-                pdf.output(os.path.expanduser("~") + '\\Documentos\\CONTRATOS_DE_VOLUNTARIOS\\Contrato_de_' + result[3] + '.pdf')
+                pdf.output(os.path.expanduser("~") + '\\Documents\\CONTRATOS_DE_VOLUNTARIOS\\Contrato_de_' + result[3] + '.pdf')
 
             root = tkinter.Tk()
             root.withdraw()

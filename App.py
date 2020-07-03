@@ -232,7 +232,16 @@ class Ui_MainWindow(object):
                     file = dialog.getOpenFileName(dialog, 'Selecionar imagem', path, 'Arquivos de imagem (*.jpeg *.jpg *.png)')    
                                             
                     if file[0] != '':
-                        copyfile(file[0], f'./assets/pictures/{model.unique_id}.jpg')
+                        if platform.system() == 'Linux':
+                            if not os.path.exists('./assets/pictures'):
+                                os.mkdir('./assets/pictures')
+                                copyfile(file[0], f'./assets/pictures/{model.unique_id}.jpg')
+                            
+                        else:
+                            if not os.path.exists('.\\assets\\pictures'):
+                                os.mkdir('.\\assets\\pictures')
+                                copyfile(file[0], f'.\\assets\\pictures\\{model.unique_id}.jpg')
+
 
                         image = QtGui.QPixmap(f'assets/pictures/{model.unique_id}.jpg')
                         self.pic_box.setPixmap(image)
