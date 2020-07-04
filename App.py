@@ -208,6 +208,7 @@ class Ui_MainWindow(object):
                 if self.status == 'adding':
                     new_total = controller.insert(model, date)
                     self.txt_index.setMaximum(new_total)
+                    self.txt_index.setMinimum(1)
                     
                 
                 elif self.status == 'editing':
@@ -235,12 +236,14 @@ class Ui_MainWindow(object):
                         if platform.system() == 'Linux':
                             if not os.path.exists('./assets/pictures'):
                                 os.mkdir('./assets/pictures')
-                                copyfile(file[0], f'./assets/pictures/{model.unique_id}.jpg')
+                            
+                            copyfile(file[0], f'./assets/pictures/{model.unique_id}.jpg')
                             
                         else:
                             if not os.path.exists('.\\assets\\pictures'):
                                 os.mkdir('.\\assets\\pictures')
-                                copyfile(file[0], f'.\\assets\\pictures\\{model.unique_id}.jpg')
+                            
+                            copyfile(file[0], f'.\\assets\\pictures\\{model.unique_id}.jpg')
 
 
                         image = QtGui.QPixmap(f'assets/pictures/{model.unique_id}.jpg')
