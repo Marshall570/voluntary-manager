@@ -284,7 +284,11 @@ class Ui_MainWindow(object):
                 self.fill_inputs()
 
     def btn_search_clicked(self):
-        controller.id_search(self.txt_search.text().strip().upper())
+        if self.txt_search.text().strip() == '':
+            controller.gen_xlsx()
+            
+        else:
+            controller.id_search(self.txt_search.text().strip().upper())
 
     def btn_print_clicked(self):
         controller.gen_contract(self.txt_index.value())
@@ -1034,7 +1038,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.tabWidget, 1, 0, 3, 1)
         self.btn_search = QtWidgets.QPushButton(self.centralwidget)
         self.btn_search.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.btn_search.setToolTip('<html><head/><body><p>Digite um nome no campo de pesquisa ao lado para fazer uma busca por um ID correspondente</p></body></html>')
+        self.btn_search.setToolTip('<html><head/><body><p>Digite um nome no campo de pesquisa ao lado para fazer uma busca por um ID correspondente ou deixe vazio para gerar uma lista com todos os voluntários</p></body></html>')
         self.btn_search.setText('PESQUISAR')
         self.btn_search.setObjectName('btn_search')
         self.gridLayout.addWidget(self.btn_search, 0, 2, 1, 3)
@@ -1069,7 +1073,7 @@ class Ui_MainWindow(object):
         self.txt_search = QtWidgets.QLineEdit(self.centralwidget)
         self.txt_search.setToolTip('')
         self.txt_search.setText('')
-        self.txt_search.setPlaceholderText('Digite um nome para pesquisar seu ID')
+        self.txt_search.setPlaceholderText('Digite um nome para pesquisar seu ID ou deixe vazio para gerar uma lista com todos os voluntários')
         self.txt_search.setObjectName('txt_search')
         self.gridLayout.addWidget(self.txt_search, 0, 0, 1, 2)
         self.btn_delete = QtWidgets.QPushButton(self.centralwidget)

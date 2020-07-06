@@ -1,6 +1,8 @@
 .venv/
 .vscode/
 UIs/
+dist/
+build/
 __pycache__/
 *.db
-assets/pictures/*
+assets/pictures/

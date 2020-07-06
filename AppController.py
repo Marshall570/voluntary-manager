@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import tkinter
 import fpdf
+import pandas
 import os
 import platform
 from tkinter import messagebox
@@ -162,8 +163,7 @@ class AppController:
     def update(self, model, index):
         try:
             conn = db.create_connection()
-            cursor = conn.cursor()
-            voluntary_id = cursor.execute('SELECT COUNT(*) FROM voluntaries').fetchone()[0] + 1
+            cursor = conn.cursor()            
 
             update_string = f'''UPDATE voluntaries SET             
             nome = '{model.name}',
@@ -388,3 +388,35 @@ class AppController:
 
         finally:
             db.close_connection()
+
+    def gen_xlsx(self):
+        try:
+            select_string = '''
+            SELECT
+            *
+            FROM
+            voluntaries
+            '''
+            
+            conn = db.create_connection()
+            data_frame = pandas.read_sql_query(select_string, conn)
+
+            if platform.system() == 'Linux':
+                data_frame.to_excel(os.path.expanduser("~") + '/Documentos/PLANILHA_DE_VOLUNTARIOS.xlsx', index=False)
+            else:
+                data_frame.to_excel(os.path.expanduser("~") + '\\Documents\\PLANILHA_DE_VOLUNTARIOS.xlsx', index=False)
+
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showinfo('SUCESSO', 'Planilha de voluntários gerada na pasta de documentos.')
+            tkinter.Tk().destroy()
+
+        except Exception as e:
+            root = tkinter.Tk()
+            root.withdraw()
+            messagebox.showerror('ERRO', e)
+            tkinter.Tk().destroy()
+
+        finally:
+            db.close_connection()
+        
