@@ -290,9 +290,8 @@ class Ui_MainWindow(object):
         else:
             controller.id_search(self.txt_search.text().strip().upper())
 
-    def btn_print_clicked(self):
-        controller.gen_contract(self.txt_index.value())
-        
+    def btn_print_clicked(self):      
+        controller.gen_contract(self.txt_index.value())                
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName('MainWindow')

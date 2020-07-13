@@ -1,0 +1,7 @@
+pyqt5
+pandas
+fpdf
+xlrd
+openpyxl
+xlsxwriter
+plyer
