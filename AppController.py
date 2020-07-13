@@ -418,7 +418,7 @@ class AppController:
             contract += string_agreement.replace('\n', '').replace('    ', '') + '\n'
 
             pdf.set_font('times', size = 12)
-            pdf.multi_cell(0, 6.5, contract, 1, 'J', 0)
+            pdf.multi_cell(0, 6.5, contract, 0, 'J', 0)
             pdf.set_font('times', 'B', size = 14)
             # pdf.write(6,'FRANCISCO MORATO, SP - ' + datetime.datetime.now().strftime('%d/%m/%Y'))
             # pdf.ln()

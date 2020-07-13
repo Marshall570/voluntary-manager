@@ -320,7 +320,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.lbl_register.sizePolicy().hasHeightForWidth())
         self.lbl_register.setSizePolicy(sizePolicy)
         self.lbl_register.setText('Registrado em:')
-        self.lbl_register.setTextFormat(QtCore.Qt.MarkdownText)
+        # self.lbl_register.setTextFormat(QtCore.Qt.MarkdownText)
         self.lbl_register.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.lbl_register.setObjectName('lbl_register')
         self.gridLayout.addWidget(self.lbl_register, 2, 2, 1, 3)
